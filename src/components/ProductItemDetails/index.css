@@ -1,1 +1,17 @@
 /* Write your CSS here */
+.product-img {
+  width: 300px;
+}
+
+.product-details-container {
+  display: flex;
+}
+
+.rating-review-container {
+  display: flex;
+}
+
+.rating-container {
+  background-color: #0b69ff;
+  width: 90px;
+}

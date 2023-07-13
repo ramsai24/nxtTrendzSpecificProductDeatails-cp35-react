@@ -176,6 +176,7 @@ class AllProductsSection extends Component {
   renderProductsListView = () => {
     const {productsList, activeOptionId} = this.state
     const shouldShowProductsList = productsList.length > 0
+    // console.log(productsList)
 
     return shouldShowProductsList ? (
       <div className="all-products-container">

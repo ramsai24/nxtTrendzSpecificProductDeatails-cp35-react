@@ -1,27 +1,33 @@
+import {Link} from 'react-router-dom'
 import './index.css'
 
 const ProductCard = props => {
+  //   const {history} = props
+  //   console.log(history)
   const {productData} = props
-  const {title, brand, imageUrl, rating, price} = productData
+  const {title, brand, id, imageUrl, rating, price} = productData
+  //   console.log(id)
 
   return (
     //   Wrap with Link from react-router-dom
-    <li className="product-item">
-      <img src={imageUrl} alt="product" className="thumbnail" />
-      <h1 className="title">{title}</h1>
-      <p className="brand">by {brand}</p>
-      <div className="product-details">
-        <p className="price">Rs {price}/-</p>
-        <div className="rating-container">
-          <p className="rating">{rating}</p>
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/star-img.png"
-            alt="star"
-            className="star"
-          />
+    <Link to={`/products/${id}`}>
+      <li className="product-item">
+        <img src={imageUrl} alt="product" className="thumbnail" />
+        <h1 className="title">{title}</h1>
+        <p className="brand">by {brand}</p>
+        <div className="product-details">
+          <p className="price">Rs {price}/-</p>
+          <div className="rating-container">
+            <p className="rating">{rating}</p>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/star-img.png"
+              alt="star"
+              className="star"
+            />
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
+    </Link>
   )
 }
 export default ProductCard
