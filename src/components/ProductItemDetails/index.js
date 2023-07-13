@@ -18,6 +18,7 @@ class ProductItemDetails extends Component {
     productItemDetailsList: [],
     apiStatus: apiStatusConstants.initial,
     quantity: 1,
+    similarProducts: [],
   }
 
   componentDidMount() {
@@ -57,6 +58,7 @@ class ProductItemDetails extends Component {
       this.setState({
         productItemDetailsList: updatedList,
         apiStatus: apiStatusConstants.success,
+        similarProducts: updatedList.similarProducts,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -70,7 +72,7 @@ class ProductItemDetails extends Component {
   )
 
   renderProductItemDetailsView = () => {
-    const {productItemDetailsList, quantity} = this.state
+    const {productItemDetailsList, similarProducts, quantity} = this.state
     const {
       imgUrl,
       title,
@@ -78,7 +80,7 @@ class ProductItemDetails extends Component {
       totalReviews,
       rating,
       availability,
-      similarProducts,
+
       price,
       description,
     } = productItemDetailsList
