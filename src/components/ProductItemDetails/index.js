@@ -1,5 +1,6 @@
 // Write your code here
 import {Component} from 'react'
+import {BsPlusSquare, BsDashSquare} from 'react-icons/bs'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
@@ -25,7 +26,7 @@ class ProductItemDetails extends Component {
   }
 
   getProductItemDetails = async () => {
-    this.setState({apiStatus: apiStatusConstants.success})
+    this.setState({apiStatus: apiStatusConstants.inprogress})
     const jwtToken = Cookies.get('jwt_token')
     const {match} = this.props
     // console.log(match.params.id)
@@ -120,20 +121,28 @@ class ProductItemDetails extends Component {
             <p>{description}</p>
             <p>
               Available:
-              <span>{availability}</span>
+              <p>{availability}</p>
             </p>
             <p>
               Brand:
-              <span>{brand}</span>
+              <p>{brand}</p>
             </p>
             <hr />
             <div className="quantity-of-item-container">
-              <button type="button" onClick={this.decreaseQuantity}>
-                -
+              <button
+                data-testid="minus"
+                type="button"
+                onClick={this.decreaseQuantity}
+              >
+                <BsDashSquare />
               </button>
               <p>{quantity}</p>
-              <button type="button" onClick={this.increaseQuantity}>
-                +
+              <button
+                data-testid="plus"
+                type="button"
+                onClick={this.increaseQuantity}
+              >
+                <BsPlusSquare />
               </button>
             </div>
             <button type="button">ADD TO CART</button>
@@ -168,9 +177,9 @@ class ProductItemDetails extends Component {
         <img
           className="failure-img"
           src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-error-view-img.png"
-          alt="error view"
+          alt="failure view"
         />
-        <p>Product Not Found</p>
+        <h1>Product Not Found</h1>
         <button type="button" onClick={this.shoppingContinues}>
           Continue Shopping
         </button>
@@ -182,12 +191,14 @@ class ProductItemDetails extends Component {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
+      case apiStatusConstants.inprogress:
+        return this.renderLoaderView()
       case apiStatusConstants.success:
         return this.renderProductItemDetailsView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
       default:
-        return this.renderLoaderView()
+        return null
     }
   }
 }
