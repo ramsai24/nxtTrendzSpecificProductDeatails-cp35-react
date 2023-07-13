@@ -18,7 +18,6 @@ class ProductItemDetails extends Component {
     productItemDetailsList: [],
     apiStatus: apiStatusConstants.initial,
     quantity: 1,
-    similarProducts: [],
   }
 
   componentDidMount() {
@@ -52,13 +51,12 @@ class ProductItemDetails extends Component {
       similarProducts: data.similar_products,
       imgUrl: data.image_url,
     }
-    console.log(updatedList)
+    // console.log(updatedList)
 
     if (response.ok) {
       this.setState({
         productItemDetailsList: updatedList,
         apiStatus: apiStatusConstants.success,
-        similarProducts: updatedList.similarProducts,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -72,7 +70,8 @@ class ProductItemDetails extends Component {
   )
 
   renderProductItemDetailsView = () => {
-    const {productItemDetailsList, similarProducts, quantity} = this.state
+    const {productItemDetailsList, quantity} = this.state
+    console.log(productItemDetailsList)
     const {
       imgUrl,
       title,
@@ -80,7 +79,7 @@ class ProductItemDetails extends Component {
       totalReviews,
       rating,
       availability,
-
+      similarProducts,
       price,
       description,
     } = productItemDetailsList
@@ -125,9 +124,10 @@ class ProductItemDetails extends Component {
         <div>
           <h1>Similar Products</h1>
           <ul>
-            {similarProducts.map(each => (
-              <SimilarProductItem similarProductItem={each} key={each.id} />
-            ))}
+            {similarProducts !== undefined &&
+              similarProducts.map(each => (
+                <SimilarProductItem similarProductItem={each} key={each.id} />
+              ))}
           </ul>
         </div>
       </div>
