@@ -3,6 +3,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
+import SimilarProductItem from '../SimilarProductItem'
 import './index.css'
 
 const apiStatusConstants = {
@@ -13,7 +14,11 @@ const apiStatusConstants = {
 }
 
 class ProductItemDetails extends Component {
-  state = {productItemDetailsList: [], apiStatus: apiStatusConstants.initial}
+  state = {
+    productItemDetailsList: [],
+    apiStatus: apiStatusConstants.initial,
+    quantity: 1,
+  }
 
   componentDidMount() {
     this.getProductItemDetails()
@@ -23,7 +28,7 @@ class ProductItemDetails extends Component {
     this.setState({apiStatus: apiStatusConstants.success})
     const jwtToken = Cookies.get('jwt_token')
     const {match} = this.props
-    console.log(match.params.id)
+    // console.log(match.params.id)
     const url = `https://apis.ccbp.in/products/${match.params.id}`
     const options = {
       method: 'GET',
@@ -65,7 +70,7 @@ class ProductItemDetails extends Component {
   )
 
   renderProductItemDetailsView = () => {
-    const {productItemDetailsList} = this.state
+    const {productItemDetailsList, quantity} = this.state
     const {
       imgUrl,
       title,
@@ -77,6 +82,7 @@ class ProductItemDetails extends Component {
       price,
       description,
     } = productItemDetailsList
+    console.log(similarProducts)
 
     return (
       <div>
@@ -97,12 +103,30 @@ class ProductItemDetails extends Component {
               <p>{totalReviews}</p>
             </div>
             <p>{description}</p>
-            <p>{`Availabel:${availability}`}</p>
+            <p>
+              Available:
+              <span>{availability}</span>
+            </p>
             <p>
               Brand:
               <span>{brand}</span>
             </p>
+            <hr />
+            <div className="quantity-of-item-container">
+              <button type="button">-</button>
+              <p>{quantity}</p>
+              <button type="button">+</button>
+            </div>
+            <button type="button">ADD TO CART</button>
           </div>
+        </div>
+        <div>
+          <h1>Similar Products</h1>
+          <ul>
+            {similarProducts.map(each => (
+              <SimilarProductItem similarProductItem={each} key={each.id} />
+            ))}
+          </ul>
         </div>
       </div>
     )

@@ -15,3 +15,7 @@
   background-color: #0b69ff;
   width: 90px;
 }
+
+.quantity-of-item-container {
+  display: flex;
+}
