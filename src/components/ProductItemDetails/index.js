@@ -69,9 +69,24 @@ class ProductItemDetails extends Component {
     </div>
   )
 
+  increaseQuantity = () =>
+    this.setState(prevState => ({
+      quantity: prevState.quantity + 1,
+    }))
+
+  decreaseQuantity = () => {
+    const {quantity} = this.state
+    if (quantity >= 1) {
+      this.setState(prevState => ({
+        quantity: prevState.quantity - 1,
+      }))
+      this.setState({quantity: 1})
+    }
+  }
+
   renderProductItemDetailsView = () => {
     const {productItemDetailsList, quantity} = this.state
-    console.log(productItemDetailsList)
+
     const {
       imgUrl,
       title,
@@ -83,7 +98,6 @@ class ProductItemDetails extends Component {
       price,
       description,
     } = productItemDetailsList
-    console.log(similarProducts)
 
     return (
       <div>
@@ -114,9 +128,13 @@ class ProductItemDetails extends Component {
             </p>
             <hr />
             <div className="quantity-of-item-container">
-              <button type="button">-</button>
+              <button type="button" onClick={this.decreaseQuantity}>
+                -
+              </button>
               <p>{quantity}</p>
-              <button type="button">+</button>
+              <button type="button" onClick={this.increaseQuantity}>
+                +
+              </button>
             </div>
             <button type="button">ADD TO CART</button>
           </div>
@@ -126,13 +144,39 @@ class ProductItemDetails extends Component {
           <ul>
             {similarProducts !== undefined &&
               similarProducts.map(each => (
-                <SimilarProductItem similarProductItem={each} key={each.id} />
+                <SimilarProductItem
+                  isLoading="false"
+                  similarProductItem={each}
+                  key={each.id}
+                />
               ))}
           </ul>
         </div>
       </div>
     )
   }
+
+  shoppingContinues = () => {
+    const {history} = this.props
+    history.replace('/products')
+  }
+
+  renderFailureView = () => (
+    <div>
+      <Header />
+      <div>
+        <img
+          className="failure-img"
+          src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-error-view-img.png"
+          alt="error view"
+        />
+        <p>Product Not Found</p>
+        <button type="button" onClick={this.shoppingContinues}>
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  )
 
   render() {
     const {apiStatus} = this.state
