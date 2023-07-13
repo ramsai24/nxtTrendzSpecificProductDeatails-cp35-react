@@ -191,14 +191,14 @@ class ProductItemDetails extends Component {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
-      case apiStatusConstants.inprogress:
-        return this.renderLoaderView()
+      //   case apiStatusConstants.inprogress:
+      //     return this.renderLoaderView()
       case apiStatusConstants.success:
         return this.renderProductItemDetailsView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
       default:
-        return null
+        return this.renderLoaderView()
     }
   }
 }
